@@ -43,3 +43,14 @@ SELECT
     (SUM(CASE WHEN churn = 'Yes' THEN 1 ELSE 0 END) * 100 / COUNT(*)) AS churn_rate
 FROM customer_churn_info
 GROUP BY Contract;
+
+-- Which services are most common among non-churned customers
+SELECT 'OnlineSecurity' AS Service, COUNT(*) AS non_churned_with_service
+FROM customer_churn_info
+WHERE churn = 'No' AND OnlineSecurity = 'Yes'
+UNION ALL
+SELECT 'TechSupport', COUNT(*)
+FROM customer_churn_info
+WHERE churn = 'No' AND TechSupport = 'Yes'
+...
+ORDER BY non_churned_with_service DESC;
